@@ -82,19 +82,22 @@
     }, 1000);
     setInterval(function() {
         google_analytics_ID();
-    }, 65000);
-    // Forzar monedas y llaves infinitas al arrancar
-var interval4399 = setInterval(function() {
-    if (typeof my4399UnityModule !== 'undefined' && my4399UnityModule.FS) {
-        clearInterval(interval4399);
+        // Inyector definitivo de recursos directo a la memoria RAM de Unity
+var intervalCoins = setInterval(function() {
+    if (typeof my4399UnityModule !== 'undefined' && my4399UnityModule.asm) {
+        clearInterval(intervalCoins);
         try {
-            my4399UnityModule.FS.writeFile('/idbfs/toprun_data', JSON.stringify({coins: 999999999, keys: 9999999}));
-            my4399UnityModule.FS.writeFile('/idbfs/user_profile', JSON.stringify({coins: 999999999, keys: 9999999}));
-            console.log("¡Monedas inyectadas con éxito desde el servidor!");
-        } catch(e) { console.log("Error al escribir guardado:", e); }
+            // Modifica los valores directamente en el motor WebGL cargado en la RAM
+            if(typeof my4399UnityModule.asm.set_coins === 'function') {
+                my4399UnityModule.asm.set_coins(999999);
+                my4399UnityModule.asm.set_keys(9999);
+                console.log("¡Monedas y llaves inyectadas en la RAM con éxito!");
+            }
+        } catch(e) { console.log("Esperando inicialización del motor..."); }
     }
-}, 200);
+}, 500);
 
+    
 </script>
 
  
