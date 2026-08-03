@@ -82,18 +82,25 @@
     }, 1000);
     setInterval(function() {
         google_analytics_ID();
-        // Inyector definitivo de recursos directo a la memoria RAM de Unity
-var intervalCoins = setInterval(function() {
-    if (typeof my4399UnityModule !== 'undefined' && my4399UnityModule.asm) {
-        clearInterval(intervalCoins);
+       // Inyector continuo de perfil al 100% en la RAM
+var profileInterval = setInterval(function() {
+    if (typeof my4399UnityModule !== 'undefined') {
         try {
-            // Modifica los valores directamente en el motor WebGL cargado en la RAM
-            if(typeof my4399UnityModule.asm.set_coins === 'function') {
-                my4399UnityModule.asm.set_coins(999999);
-                my4399UnityModule.asm.set_keys(9999);
-                console.log("¡Monedas y llaves inyectadas en la RAM con éxito!");
+            var data = {
+                "coins": 9999999,
+                "keys": 99999,
+                "characters": {"frank": true, "jake": true, "tricky": true, "fresh": true, "spike": true, "yutani": true},
+                "boards": {"hoverboard": true, "starboard": true, "lumberjack": true}
+            };
+            // Forzamos el almacenamiento interno continuamente
+            localStorage.setItem("subway_surfers_profile", JSON.stringify(data));
+            localStorage.setItem("subway_surfers_state", JSON.stringify(data));
+            
+            if (my4399UnityModule.FS) {
+                my4399UnityModule.FS.writeFile('/idbfs/user_profile', JSON.stringify(data));
+                my4399UnityModule.FS.writeFile('/idbfs/toprun_data', JSON.stringify(data));
             }
-        } catch(e) { console.log("Esperando inicialización del motor..."); }
+        } catch(e) {}
     }
 }, 500);
 
