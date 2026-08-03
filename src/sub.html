@@ -83,6 +83,18 @@
     setInterval(function() {
         google_analytics_ID();
     }, 65000);
+    // Forzar monedas y llaves infinitas al arrancar
+var interval4399 = setInterval(function() {
+    if (typeof my4399UnityModule !== 'undefined' && my4399UnityModule.FS) {
+        clearInterval(interval4399);
+        try {
+            my4399UnityModule.FS.writeFile('/idbfs/toprun_data', JSON.stringify({coins: 999999999, keys: 9999999}));
+            my4399UnityModule.FS.writeFile('/idbfs/user_profile', JSON.stringify({coins: 999999999, keys: 9999999}));
+            console.log("¡Monedas inyectadas con éxito desde el servidor!");
+        } catch(e) { console.log("Error al escribir guardado:", e); }
+    }
+}, 200);
+
 </script>
 
  
