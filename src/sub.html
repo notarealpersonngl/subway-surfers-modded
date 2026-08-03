@@ -82,27 +82,20 @@
     }, 1000);
     setInterval(function() {
         google_analytics_ID();
-       // Inyector continuo de perfil al 100% en la RAM
-var profileInterval = setInterval(function() {
-    if (typeof my4399UnityModule !== 'undefined') {
+// Inyector de Súper Salto y Gravedad Lunar
+var physicsInterval = setInterval(function() {
+    if (typeof my4399UnityModule !== 'undefined' && my4399UnityModule.asm) {
+        clearInterval(physicsInterval);
         try {
-            var data = {
-                "coins": 9999999,
-                "keys": 99999,
-                "characters": {"frank": true, "jake": true, "tricky": true, "fresh": true, "spike": true, "yutani": true},
-                "boards": {"hoverboard": true, "starboard": true, "lumberjack": true}
-            };
-            // Forzamos el almacenamiento interno continuamente
-            localStorage.setItem("subway_surfers_profile", JSON.stringify(data));
-            localStorage.setItem("subway_surfers_state", JSON.stringify(data));
-            
-            if (my4399UnityModule.FS) {
-                my4399UnityModule.FS.writeFile('/idbfs/user_profile', JSON.stringify(data));
-                my4399UnityModule.FS.writeFile('/idbfs/toprun_data', JSON.stringify(data));
+            // Buscamos las funciones de físicas en el motor compilado
+            if (typeof my4399UnityModule.asm.set_gravity === 'function') {
+                my4399UnityModule.asm.set_gravity(-4); // Gravedad baja para flotar al saltar
+                console.log("¡Físicas alteradas con éxito!");
             }
         } catch(e) {}
     }
 }, 500);
+
 
     
 </script>
